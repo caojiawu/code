@@ -17,8 +17,8 @@ public class TClass<T>{
 
 	public static void main(String[] args){
 		TClass<Integer> a = new TClass<Integer>();
-		a.setX(new Integer(args[0]));
-		a.setY(new Integer(args[1]));
+		a.setX(Integer.valueOf(args[0]));
+		a.setY(Integer.valueOf(args[1]));
 		System.out.println(a.getX());
 		System.out.println(a.getY());	
 	};
