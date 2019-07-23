@@ -21,6 +21,7 @@ public class TClass<T>{
 		a.setX(Integer.valueOf(args[0]));
 		a.setY(Integer.valueOf(args[1]));
 		System.out.println(a.getX());
-		System.out.println(a.getY());	
-	};
+		System.out.println(a.getY());
+
+	}
 }
