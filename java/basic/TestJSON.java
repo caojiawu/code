@@ -1,6 +1,7 @@
 package basic;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.util.HashMap;
 
 public class TestJSON {
     public static void main(String[] args) {
@@ -16,5 +17,10 @@ public class TestJSON {
             System.out.println(jsonObject1.get("name"));
         }
 
+        HashMap hashMap = new HashMap();
+        hashMap.put("name","xiaowang");
+        hashMap.put("age",13);
+        JSONObject jsonObject2 = new JSONObject(hashMap);
+        System.out.println(jsonObject2.get("name"));
     }
 }
