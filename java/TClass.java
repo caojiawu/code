@@ -1,4 +1,3 @@
-package test.basic;
 
 public class TClass<T>{
 	private T x;
