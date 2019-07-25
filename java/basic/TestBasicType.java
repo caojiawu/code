@@ -7,6 +7,11 @@ import java.util.List;
 
 public class TestBasicType {
     public static void main(String[] args){
+        StringBuffer a = new StringBuffer("abc");
+        StringBuffer b = a;
+        b.append('f');
+        System.out.println(a);
+
         TestBasicType obj = new TestBasicType();
         obj.testArrayList();
 
@@ -17,6 +22,7 @@ public class TestBasicType {
 
         //test case 1:
         List<String> myList = Arrays.asList(arr);
+
         //myList.add("ddd"); // exception for the object behind myList is still a Array not support add method
 
         //test case 2 compared with test case 1
