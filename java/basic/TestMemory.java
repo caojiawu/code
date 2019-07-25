@@ -9,13 +9,13 @@ public class TestMemory {
     public static void testMemoryAllocate(){
         Integer a1 = 33;
         Integer a2 = 33;
-        System.out.println(a1==a2); //True. Integer类型取值在[-128,127]范围，栈中分配并查找一个已经存在的对象
+        System.out.println(a1==a2); //True. Integer类型取值在[-128,127]范围，在常量区分配并查找一个已经存在的对象
 
         //bullshit memory allocation mechanism, this lead to confusion.
         //including Byte, Short, Integer, Long, Character and Boolean, except for Float and Double.
         Integer b1 = 330;
         Integer b2 = 330;
-        System.out.println(b1==b2); //False. Integer类型取值不在[-128,127]范围，栈中直接创建一个新的对象
+        System.out.println(b1==b2); //False. Integer类型取值不在[-128,127]范围，直接创建一个新的对象
 
         Double f1 = 30.0;
         Double f2 = 30.0;
@@ -31,7 +31,7 @@ public class TestMemory {
 
         String e1 = new String("hello world");
         String e2 = new String("hello world");
-        System.out.println(e1==e2); //False. 在堆上分配的对象，每次地址均不同
+        System.out.println(e1==e2); //False. 在堆上分配的对象，每次地址不同
 
         String g1 = "Str"+"ing";
         String g2 = "Str";
