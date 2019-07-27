@@ -1,19 +1,30 @@
 package sample;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Snake {
+    public int status = 0; //0:alive,1:collided
+    public Yard yard;
 
-
-    public int pointBeginX;
-    public int pointBeginY;
-    public List<Segment> segmentList;
+    public int pointHeadX;
+    public int pointHeadY;
+    public List<Segment> segmentList = new ArrayList();
 
     public Snake(Yard yard){
-        this.pointBeginX = yard.width/2;
-        this.pointBeginY = yard.height/2;
+        this.yard = yard;
+        this.pointHeadX = this.yard.width/2;
+        this.pointHeadY = this.yard.height/2;
 
-        Segment seg = new Segment();
+        Segment seg = new Segment(5,DIRECTION.up);
         segmentList.add(seg);
+
+        //remove beans while snake cover the beans
+        List<Position> snakePos = getPositions();
+        for(Position beanPos:this.yard.beans){
+            if(snakePos.contains(beanPos)){
+                yard.beans.remove(beanPos);
+            }
+        }
     }
 
     public DIRECTION getOpposite(DIRECTION direction){
@@ -27,24 +38,110 @@ public class Snake {
             case right:
                 return DIRECTION.left;
         }
+        return DIRECTION.up;
     }
 
-    public void move(DIRECTION direction){
-        //if the new direction is the opposite of last segment, do nothing
-        if((direction!=DIRECTION.keep) &
-            (segmentList.get(segmentList.size()-1)).direction == getOpposite(direction)){
-            move(DIRECTION.keep);
-        }else if(direction == DIRECTION.keep){
-            //todo: check whether there is obstacle or bean ahead
-
-            //check remove the first segment or shorten it
-            Segment lastSegment = segmentList.get(segmentList.size()-1);
-            lastSegment.length = lastSegment.length + 1;
-
+    public void changeDirection(DIRECTION direction){
+        //if the new direction is same, or is opposite of head segment
+        Segment headSegment = segmentList.get(0);
+        if((direction == headSegment.direction) | (headSegment.direction == getOpposite(direction))){
+            return;
         }else{
-            //add new segment
+            //add new segment or change direction of a never moving segment
+            if(headSegment.length == 0){
+                headSegment.direction = direction;
+            }else{
+                segmentList.add(0,new Segment(0,direction));
+            }
         }
     }
 
-    public check
+    //return false if collided toward obstacle.
+    public void move(){
+        if(this.status == 1)
+            return;
+
+        //check whether collide
+        Segment headSegment = segmentList.get(0);
+        int newPointHeadX = this.pointHeadX;
+        int newPointHeadY = this.pointHeadY;
+
+        switch (headSegment.direction){
+            case up:
+                newPointHeadY = newPointHeadY + 1;
+                break;
+            case down:
+                newPointHeadY = newPointHeadY - 1;
+                break;
+            case left:
+                newPointHeadX = newPointHeadX - 1;
+                break;
+            case right:
+                newPointHeadX = newPointHeadX + 1;
+                break;
+        }
+
+        //check whether collide with the wall
+        if(newPointHeadY <= 0 | newPointHeadY >= yard.height | newPointHeadX <= 0 | newPointHeadY >= yard.width){
+            this.status = 1;
+            return;
+        }
+        //check whether collide with himself
+        if(getPositions().contains(new Position(newPointHeadX, newPointHeadY))){
+            this.status = 1;
+            return;
+        }
+
+        //eat bean or keep moving
+        Boolean eatFlag = false;
+        if(this.yard.beans.contains(new Position(newPointHeadX,newPointHeadY))){
+            eatFlag = true;
+        }
+
+        this.pointHeadX = newPointHeadX;
+        this.pointHeadY = newPointHeadY;
+        headSegment.length = headSegment.length + 1;
+        if(eatFlag == Boolean.FALSE){
+            Segment lastSegment = segmentList.get(segmentList.size() - 1);
+            if (lastSegment.length == 1) {
+                segmentList.remove(segmentList.size() - 1);
+            } else {
+                lastSegment.length = lastSegment.length - 1;
+            }
+        }
+    }
+
+    public ArrayList getPositions(){
+        ArrayList positionList = new ArrayList();
+        int tmpSegmentX = this.pointHeadX;
+        int tmpSegmentY = this.pointHeadY;
+        positionList.add(new Position(this.pointHeadX, this.pointHeadY));
+        for(Segment segment:segmentList){
+            //System.out.println(segment);
+            if(segment.length > 0){
+                for(int i = 1; i < segment.length + 1; i++){
+                    switch (segment.direction){
+                        case up:
+                            positionList.add(new Position(tmpSegmentX, tmpSegmentY + 1));
+                            tmpSegmentY = tmpSegmentY + 1;
+                            break;
+                        case down:
+                            positionList.add(new Position(tmpSegmentX, tmpSegmentY - 1));
+                            tmpSegmentY = tmpSegmentY - 1;
+                            break;
+                        case left:
+                            positionList.add(new Position(tmpSegmentX - 1, tmpSegmentY));
+                            tmpSegmentX= tmpSegmentX - 1;
+                            break;
+                        case right:
+                            positionList.add(new Position(tmpSegmentX + 1, tmpSegmentY));
+                            tmpSegmentX = tmpSegmentX + 1;
+                            break;
+                    }
+                }
+            }
+        }
+        return positionList;
+    }
 }
+

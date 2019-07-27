@@ -1,10 +1,11 @@
 package sample;
 
 public class Segment{
-    public int length;
+    public int length; //length is maybe 0 while turn direction.
     public DIRECTION direction;
-    public Segment(){
-        length = 3;
-        direction = DIRECTION.up;
+
+    public Segment(int len, DIRECTION direction){
+        this.length = len;
+        this.direction = direction;
     }
 }
