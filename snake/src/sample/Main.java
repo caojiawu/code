@@ -29,7 +29,7 @@ public class Main extends Application {
             snakePane.draw(snake);
         };
 
-        Timeline animation=new Timeline(new KeyFrame(Duration.millis(500),eventHandler));
+        Timeline animation=new Timeline(new KeyFrame(Duration.millis(350),eventHandler));
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.play();
 
