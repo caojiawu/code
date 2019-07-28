@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -24,9 +25,8 @@ public class Main extends Application {
         yard.addBeans(30);
         Snake snake = new Snake(yard);
 
-
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        FlowPane root = new FlowPane();
+        //FlowPane root = new FlowPane();
 
         primaryStage.setTitle("Hello Snake");
 
@@ -82,6 +82,29 @@ public class Main extends Application {
 
         primaryStage.setScene(new Scene(group, ConstantClass.GRID_WIDTH*ConstantClass.CANVAS_WIDTH+2*ConstantClass.BASE_X,
                 ConstantClass.GRID_WIDTH*ConstantClass.CANVAS_HEIGHT+2*ConstantClass.BASE_Y));
+
+
+        group.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                switch(event.getCharacter()){
+                    case "a":
+                        snake.changeDirection(DIRECTION.left);
+                        break;
+                    case "s":
+                        snake.changeDirection(DIRECTION.down);
+                        break;
+                    case "w":
+                        snake.changeDirection(DIRECTION.up);
+                        break;
+                    case "d":
+                        snake.changeDirection(DIRECTION.right);
+                        break;
+                }
+            }
+        });
+
         primaryStage.show();
         System.out.println("none");
     }

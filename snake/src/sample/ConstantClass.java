@@ -6,5 +6,5 @@ public class ConstantClass {
     final public static int GRID_WIDTH = 15;
     final public static int GRID_RADIUS = 8;
     final public static int BASE_X = 10;
-    final public static int BASE_Y = 30;
+    final public static int BASE_Y = 10;
 }
