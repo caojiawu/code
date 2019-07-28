@@ -22,7 +22,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Yard yard = new Yard(ConstantClass.CANVAS_WIDTH,ConstantClass.CANVAS_HEIGHT);
-        yard.addBeans(30);
+        yard.addBeans(ConstantClass.BEANS_COUNT);
         Snake snake = new Snake(yard);
 
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -76,7 +76,7 @@ public class Main extends Application {
             snakePane.draw(snake);
         };
 
-        Timeline animation=new Timeline(new KeyFrame(Duration.millis(1000),eventHandler));
+        Timeline animation=new Timeline(new KeyFrame(Duration.millis(500),eventHandler));
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.play();
 

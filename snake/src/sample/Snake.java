@@ -58,8 +58,10 @@ public class Snake {
 
     //return false if collided toward obstacle.
     public void move(){
-        if(this.status == 1)
+        if(this.status == 1) {
+            this.yard.addBeans(200);
             return;
+        }
 
         //check whether collide
         Segment headSegment = segmentList.get(0);
@@ -99,8 +101,11 @@ public class Snake {
             this.yard.beans.remove(new Position(newPointHeadX,newPointHeadY));
         }
 
-        this.pointHeadX = newPointHeadX;
-        this.pointHeadY = newPointHeadY;
+        if(headSegment.length != 0) {
+            this.pointHeadX = newPointHeadX;
+            this.pointHeadY = newPointHeadY;
+        }
+
         headSegment.length = headSegment.length + 1;
         if(eatFlag == Boolean.FALSE){
             Segment lastSegment = segmentList.get(segmentList.size() - 1);
