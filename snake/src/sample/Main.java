@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,20 +14,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 public class Main extends Application {
-    final public int CANVAS_WIDTH = 110;
-    final public int CANVAS_HEIGHT = 90;
-    final public int GRID_WIDTH = 5;
-    final public int GRID_RADIUS = 3;
-    final public int BASE_X = 10;
-    final public int BASE_Y = 30;
-
-
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Yard yard = new Yard(CANVAS_WIDTH,CANVAS_HEIGHT);
+        Yard yard = new Yard(ConstantClass.CANVAS_WIDTH,ConstantClass.CANVAS_HEIGHT);
         yard.addBeans(30);
         Snake snake = new Snake(yard);
 
@@ -40,7 +35,6 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 snake.changeDirection(DIRECTION.up);
-                System.out.println(snake.segmentList.get(0).direction);
             }
         });
         Button btnDown = new Button("Down");
@@ -48,7 +42,6 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 snake.changeDirection(DIRECTION.down);
-                System.out.println(snake.segmentList.get(0).direction);
             }
         });
         Button btnLeft = new Button("Left");
@@ -56,7 +49,6 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 snake.changeDirection(DIRECTION.left);
-                System.out.println(snake.segmentList.get(0).direction);
             }
         });
         Button btnRight = new Button("Right");
@@ -64,7 +56,6 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 snake.changeDirection(DIRECTION.right);
-                System.out.println(snake.segmentList.get(0).direction);
             }
         });
 
@@ -77,26 +68,20 @@ public class Main extends Application {
         Group group = new Group();
         group.getChildren().add(hBox);
 
-        Rectangle rect = new Rectangle(CANVAS_WIDTH*GRID_WIDTH,CANVAS_HEIGHT*5,Color.BLACK); //Yard width and height
-        rect.setX(BASE_X);
-        rect.setY(BASE_Y);
-        group.getChildren().add(rect);
+        SnakePane snakePane = new SnakePane(snake);
+        group.getChildren().add(snakePane);
 
-        for(Position p:yard.beans){
-            Circle circle = new Circle(p.x*GRID_WIDTH-GRID_RADIUS + BASE_X,
-                    p.y*GRID_WIDTH-GRID_RADIUS+BASE_Y,GRID_RADIUS,Color.RED);
-            group.getChildren().add(circle);
-        }
+        EventHandler<ActionEvent> eventHandler = e -> {
+            snake.move();
+            snakePane.draw(snake);
+        };
 
-        java.util.List<Position> snakePosList = snake.getPositions();
-        for(Position p:snakePosList){
-            Rectangle r = new Rectangle(GRID_WIDTH,GRID_WIDTH,Color.GREEN);
-            r.setX((p.x-1)*GRID_WIDTH);
-            r.setY((p.y-1)*GRID_WIDTH);
-            group.getChildren().add(r);
-        }
+        Timeline animation=new Timeline(new KeyFrame(Duration.millis(1000),eventHandler));
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.play();
 
-        primaryStage.setScene(new Scene(group, 600, 500));
+        primaryStage.setScene(new Scene(group, ConstantClass.GRID_WIDTH*ConstantClass.CANVAS_WIDTH+2*ConstantClass.BASE_X,
+                ConstantClass.GRID_WIDTH*ConstantClass.CANVAS_HEIGHT+2*ConstantClass.BASE_Y));
         primaryStage.show();
         System.out.println("none");
     }

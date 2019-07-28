@@ -68,10 +68,10 @@ public class Snake {
 
         switch (headSegment.direction){
             case up:
-                newPointHeadY = newPointHeadY + 1;
+                newPointHeadY = newPointHeadY -1;
                 break;
             case down:
-                newPointHeadY = newPointHeadY - 1;
+                newPointHeadY = newPointHeadY + 1;
                 break;
             case left:
                 newPointHeadX = newPointHeadX - 1;
@@ -82,7 +82,7 @@ public class Snake {
         }
 
         //check whether collide with the wall
-        if(newPointHeadY <= 0 | newPointHeadY >= yard.height | newPointHeadX <= 0 | newPointHeadY >= yard.width){
+        if(newPointHeadY <= 0 | newPointHeadY >= yard.height | newPointHeadX <= 0 | newPointHeadX >= yard.width){
             this.status = 1;
             return;
         }
@@ -96,6 +96,7 @@ public class Snake {
         Boolean eatFlag = false;
         if(this.yard.beans.contains(new Position(newPointHeadX,newPointHeadY))){
             eatFlag = true;
+            this.yard.beans.remove(new Position(newPointHeadX,newPointHeadY));
         }
 
         this.pointHeadX = newPointHeadX;
@@ -119,7 +120,7 @@ public class Snake {
         for(Segment segment:segmentList){
             //System.out.println(segment);
             if(segment.length > 0){
-                for(int i = 1; i < segment.length + 1; i++){
+                for(int i = 1; i < segment.length; i++){
                     switch (segment.direction){
                         case up:
                             positionList.add(new Position(tmpSegmentX, tmpSegmentY + 1));
@@ -130,12 +131,12 @@ public class Snake {
                             tmpSegmentY = tmpSegmentY - 1;
                             break;
                         case left:
-                            positionList.add(new Position(tmpSegmentX - 1, tmpSegmentY));
-                            tmpSegmentX= tmpSegmentX - 1;
+                            positionList.add(new Position(tmpSegmentX + 1, tmpSegmentY));
+                            tmpSegmentX= tmpSegmentX + 1;
                             break;
                         case right:
-                            positionList.add(new Position(tmpSegmentX + 1, tmpSegmentY));
-                            tmpSegmentX = tmpSegmentX + 1;
+                            positionList.add(new Position(tmpSegmentX - 1, tmpSegmentY));
+                            tmpSegmentX = tmpSegmentX - 1;
                             break;
                     }
                 }
