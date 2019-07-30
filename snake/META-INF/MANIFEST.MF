@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: sample.Main
+Class-Path: /Users/caojiawu/Downloads/javafx-sdk-12.0.1/lib
+

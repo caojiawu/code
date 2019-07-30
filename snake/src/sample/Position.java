@@ -10,10 +10,6 @@ public class Position {
 
     @Override
     public boolean equals(Object obj) {
-        if(this.x == ((Position)obj).x & this.y == ((Position)obj).y){
-            return true;
-        }else{
-            return false;
-        }
+        return this.x == ((Position) obj).x & this.y == ((Position) obj).y;
     }
 }

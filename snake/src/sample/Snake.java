@@ -59,7 +59,7 @@ public class Snake {
     //return false if collided toward obstacle.
     public void move(){
         if(this.status == 1) {
-            this.yard.addBeans(200);
+            this.yard.addBeans(100);
             return;
         }
 

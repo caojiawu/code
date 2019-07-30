@@ -56,7 +56,6 @@ public class Main extends Application {
             }
         });
         primaryStage.show();
-        System.out.println("none");
     }
 
     public static void main(String[] args) {
