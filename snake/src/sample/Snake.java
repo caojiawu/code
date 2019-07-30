@@ -1,28 +1,30 @@
 package sample;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Snake {
-    public int status = 0; //0:alive,1:collided
+    private int status = 0; //0:alive,1:collided
     public Yard yard;
 
-    public int pointHeadX;
-    public int pointHeadY;
-    public List<Segment> segmentList = new ArrayList();
+    private int pointHeadX;
+    private int pointHeadY;
+    private List<Segment> segmentList = new ArrayList();
 
     public Snake(Yard yard){
         this.yard = yard;
         this.pointHeadX = this.yard.width/2;
         this.pointHeadY = this.yard.height/2;
 
-        Segment seg = new Segment(5,DIRECTION.up);
+        Segment seg = new Segment(15,DIRECTION.up);
         segmentList.add(seg);
 
-        //remove beans while snake cover the beans
         List<Position> snakePos = getPositions();
-        for(Position beanPos:this.yard.beans){
-            if(snakePos.contains(beanPos)){
-                yard.beans.remove(beanPos);
+        Iterator<Position> it = yard.beans.iterator();
+        while (it.hasNext()){
+            Position p = it.next();
+            if (snakePos.contains(p)){
+                it.remove();
             }
         }
     }

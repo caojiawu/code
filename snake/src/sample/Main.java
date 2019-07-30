@@ -20,21 +20,20 @@ public class Main extends Application {
 
         primaryStage.setTitle("Hello Snake");
         Group group = new Group();
-
-        SnakePane snakePane = new SnakePane(snake);
-        group.getChildren().add(snakePane);
+        SnakeCanvas snakeCanvas = new SnakeCanvas(snake);
+        group.getChildren().add(snakeCanvas);
 
         EventHandler<ActionEvent> eventHandler = e -> {
             snake.move();
-            snakePane.draw(snake);
+            snakeCanvas.draw(snake);
         };
 
         Timeline animation=new Timeline(new KeyFrame(Duration.millis(350),eventHandler));
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.play();
 
-        Scene scene = new Scene(group, ConstantClass.GRID_WIDTH*ConstantClass.CANVAS_WIDTH+2*ConstantClass.BASE_X,
-                ConstantClass.GRID_WIDTH*ConstantClass.CANVAS_HEIGHT+2*ConstantClass.BASE_Y);
+        Scene scene = new Scene(group, ConstantClass.GRID_WIDTH*ConstantClass.CANVAS_WIDTH+ConstantClass.BASE_X,
+                ConstantClass.GRID_WIDTH*ConstantClass.CANVAS_HEIGHT+ConstantClass.BASE_Y);
         primaryStage.setScene(scene);
         scene.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
