@@ -28,6 +28,7 @@ public class SnakeCanvas extends Canvas {
 
         List<Position> snakePosList = snake.getPositions();
         for(Position p:snakePosList){
+            gc.setFill(Color.BLUE);
             gc.strokeRect((p.x-1)*ConstantClass.GRID_WIDTH/*+ConstantClass.BASE_X*/,
                     (p.y-1)*ConstantClass.GRID_WIDTH/*+ConstantClass.BASE_Y*/,
                     ConstantClass.GRID_WIDTH,ConstantClass.GRID_WIDTH);
