@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Snake {
     private int status = 0; //0:alive,1:collided
+    private int collidedDrawCount = 0;
     public Yard yard;
 
     private int pointHeadX;
@@ -61,7 +62,10 @@ public class Snake {
     //return false if collided toward obstacle.
     public void move(){
         if(this.status == 1) {
-            this.yard.addBeans(100);
+            if(this.collidedDrawCount<30){
+                this.yard.addBeans(100);
+                this.collidedDrawCount++;
+            }
             return;
         }
 
