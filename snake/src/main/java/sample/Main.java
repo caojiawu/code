@@ -5,9 +5,12 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -17,11 +20,16 @@ public class Main extends Application {
         Yard yard = new Yard(ConstantClass.CANVAS_WIDTH,ConstantClass.CANVAS_HEIGHT);
         yard.addBeans(ConstantClass.BEANS_COUNT);
         Snake snake = new Snake(yard);
-
         primaryStage.setTitle("Hello Snake");
-        Group group = new Group();
+        Pane group = new Pane();
+
         SnakeCanvas snakeCanvas = new SnakeCanvas(snake);
         group.getChildren().add(snakeCanvas);
+
+        MessagePane messagePane = new MessagePane();
+        messagePane.setLayoutX((ConstantClass.GRID_WIDTH*ConstantClass.CANVAS_WIDTH+ConstantClass.BASE_X)-150);
+        messagePane.setLayoutY(40);
+        group.getChildren().add(messagePane);
 
         EventHandler<ActionEvent> eventHandler = e -> {
             snake.move();
@@ -50,6 +58,14 @@ public class Main extends Application {
                         break;
                     case "d":
                         snake.changeDirection(DIRECTION.right);
+                        break;
+                    case "p":
+                        if(snake.status == 0) {
+                            messagePane.add("Pause");
+                        }else{
+                            messagePane.getChildren().clear();
+                        }
+                        snake.pause();
                         break;
                 }
             }

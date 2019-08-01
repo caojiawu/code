@@ -16,6 +16,10 @@ public class SnakeCanvas extends Canvas {
     }
 
     public void draw(Snake snake){
+        if(snake.status == 2){
+            return;
+        }
+
         GraphicsContext gc = this.getGraphicsContext2D();
         gc.clearRect(0,0,this.getWidth(),this.getHeight());
 

@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Snake {
-    private int status = 0; //0:alive,1:collided
+    public int status = 0; //0:alive,1:collided,2:pause
     private int collidedDrawCount = 0;
     public Yard yard;
 
@@ -45,6 +45,9 @@ public class Snake {
     }
 
     public void changeDirection(DIRECTION direction){
+        if(this.status == 2){
+            return;
+        }
         //if the new direction is same, or is opposite of head segment
         Segment headSegment = segmentList.get(0);
         if((direction == headSegment.direction) | (headSegment.direction == getOpposite(direction))){
@@ -52,10 +55,22 @@ public class Snake {
         }else{
             //add new segment or change direction of a never moving segment
             if(headSegment.length == 0){
-                headSegment.direction = direction;
+                if(segmentList.get(1).direction == getOpposite(direction)){
+                    return;
+                }else {
+                    headSegment.direction = direction;
+                }
             }else{
                 segmentList.add(0,new Segment(0,direction));
             }
+        }
+    }
+
+    public void pause(){
+        if(this.status == 0) {
+            this.status = 2;
+        }else if(this.status == 2){
+            this.status = 0;
         }
     }
 
@@ -66,6 +81,8 @@ public class Snake {
                 this.yard.addBeans(100);
                 this.collidedDrawCount++;
             }
+            return;
+        }else if(this.status == 2){
             return;
         }
 
