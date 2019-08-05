@@ -24,7 +24,7 @@ public class SnakeCanvas extends Canvas {
         gc.clearRect(0,0,this.getWidth(),this.getHeight());
 
         for(Position p:snake.yard.beans){
-            gc.setFill(Color.GREEN);
+            gc.setFill(Color.CHOCOLATE);
             gc.fillOval((p.x-1)*ConstantClass.GRID_WIDTH /*+ ConstantClass.BASE_X*/,
                     (p.y-1)*ConstantClass.GRID_WIDTH/*+ConstantClass.BASE_Y*/,
                     ConstantClass.GRID_WIDTH,ConstantClass.GRID_WIDTH);

@@ -9,6 +9,5 @@
         <module name="snake" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="12" />
   </component>
 </project>
