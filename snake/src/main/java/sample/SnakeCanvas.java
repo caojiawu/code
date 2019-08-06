@@ -7,7 +7,7 @@ import java.util.List;
 
 public class SnakeCanvas extends Canvas {
 
-    public SnakeCanvas(Snake snake){
+    public SnakeCanvas(Snake snake) throws CloneNotSupportedException {
         this.setWidth(ConstantClass.GRID_WIDTH*ConstantClass.CANVAS_WIDTH);//+2*ConstantClass.BASE_X);
         this.setHeight(ConstantClass.GRID_WIDTH*ConstantClass.CANVAS_WIDTH);//+2*ConstantClass.BASE_Y);
         this.setLayoutX(ConstantClass.BASE_X);
@@ -24,7 +24,7 @@ public class SnakeCanvas extends Canvas {
         gc.clearRect(0,0,this.getWidth(),this.getHeight());
 
         for(Position p:snake.yard.beans){
-            gc.setFill(Color.CHOCOLATE);
+            gc.setFill(Color.PAPAYAWHIP);
             gc.fillOval((p.x-1)*ConstantClass.GRID_WIDTH /*+ ConstantClass.BASE_X*/,
                     (p.y-1)*ConstantClass.GRID_WIDTH/*+ConstantClass.BASE_Y*/,
                     ConstantClass.GRID_WIDTH,ConstantClass.GRID_WIDTH);
